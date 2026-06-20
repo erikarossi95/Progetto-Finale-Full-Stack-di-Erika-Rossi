@@ -1,0 +1,30 @@
+# Dipendenze
+/backend/vendor/
+/frontend/node_modules/
+
+# Build frontend
+/frontend/dist/
+
+# Variabili d'ambiente (mai versionate)
+.env
+backend/.env
+frontend/.env
+
+# File caricati dagli invitati
+/backend/uploads/*
+!/backend/uploads/.gitkeep
+
+# Storage runtime (rate limiter, cache)
+/backend/storage/
+
+# Cache test
+/backend/.phpunit.cache/
+
+# OS / editor
+.DS_Store
+*.log
+.vscode/
+.idea/
+
+# Documenti non pubblici
+Snaply_Specifiche_Tecniche.md

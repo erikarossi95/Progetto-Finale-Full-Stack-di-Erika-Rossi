@@ -1,0 +1,7 @@
+# Front controller: ogni richiesta che non sia un file/cartella reale
+# viene servita da index.php.
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L]

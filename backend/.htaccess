@@ -1,0 +1,6 @@
+# Tutte le richieste passano da public/index.php (front controller).
+RewriteEngine On
+
+# Reindirizza fisicamente verso la cartella public/
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ public/$1 [L]

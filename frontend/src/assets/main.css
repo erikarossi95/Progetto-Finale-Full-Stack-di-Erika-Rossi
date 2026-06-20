@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Snaply — design system e classi di componente basate sui token brand.
+   Le utility Tailwind restano la prima scelta; qui i pattern ricorrenti. */
+
+@layer base {
+  html {
+    font-family: theme('fontFamily.sans');
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-surface-muted text-ink antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: theme('fontFamily.display');
+    @apply text-ink tracking-tight;
+  }
+  /* Focus visibile e coerente su tutti gli elementi interattivi. */
+  :focus-visible {
+    @apply outline-none shadow-focus rounded-lg;
+  }
+  /* Riduce il ritardo di 300ms al tap su mobile per gli elementi interattivi. */
+  button,
+  a,
+  [role='button'],
+  label,
+  summary {
+    touch-action: manipulation;
+  }
+  ::selection {
+    @apply bg-brand-200 text-brand-900;
+  }
+}
+
+@layer components {
+  /* --- Pulsanti --- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5
+           font-semibold text-sm transition-all duration-200 ease-snappy
+           focus:outline-none focus-visible:shadow-focus
+           disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0
+           select-none active:scale-[0.97];
+  }
+  .btn-primary {
+    @apply btn bg-brand-gradient text-white shadow-card
+           hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+  .btn-accent {
+    @apply btn bg-accent-400 text-white shadow-card
+           hover:bg-accent-500 hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+  .btn-secondary {
+    @apply btn bg-surface text-ink border border-surface-border
+           hover:bg-surface-muted hover:border-brand-200 hover:-translate-y-0.5;
+  }
+  .btn-ghost {
+    @apply btn bg-transparent text-ink-soft hover:bg-brand-50 hover:text-brand-700;
+  }
+  .btn-danger {
+    @apply btn bg-error text-white hover:bg-error-dark hover:-translate-y-0.5;
+  }
+  .btn-lg {
+    @apply px-6 py-3 text-base;
+  }
+
+  /* --- Form --- */
+  .label {
+    @apply block text-sm font-semibold text-ink-soft mb-1.5;
+  }
+  .input {
+    @apply w-full rounded-xl border-surface-border bg-surface px-4 py-2.5 text-ink
+           placeholder:text-ink-muted shadow-sm transition duration-200 ease-snappy
+           focus:border-brand-400 focus:ring-2 focus:ring-brand-200;
+  }
+  .input-error {
+    @apply border-error focus:border-error focus:ring-error-light;
+  }
+  .field-error {
+    @apply mt-1.5 flex items-center gap-1 text-sm text-error-dark;
+  }
+
+  /* --- Superfici --- */
+  .card {
+    @apply rounded-2xl bg-surface border border-surface-border shadow-card;
+  }
+  /* Card cliccabile con sollevamento all'hover. */
+  .card-interactive {
+    @apply card transition-all duration-300 ease-snappy
+           hover:-translate-y-1 hover:shadow-card-hover;
+  }
+
+  /* --- Badge --- */
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold;
+  }
+
+  /* --- Eyebrow / occhiello di sezione --- */
+  .eyebrow {
+    @apply inline-block text-sm font-semibold uppercase tracking-wider text-brand-500;
+  }
+}
+
+@layer utilities {
+  /* Sfumatura testo brand per headline d'effetto. */
+  .text-gradient {
+    @apply bg-brand-gradient bg-clip-text text-transparent;
+  }
+  /* Maschera puntinata decorativa leggera (hero). */
+  .bg-dots {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.25) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+}
+
+/* --- Transizione errori di campo (inline) --- */
+.err-enter-active {
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.err-leave-active {
+  transition: opacity 0.12s ease;
+}
+.err-enter-from {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+.err-leave-to {
+  opacity: 0;
+}
+
+/* --- Transizione di pagina (route) ---
+   Volutamente sottile e applicata al wrapper di App.vue (single root garantito). */
+.page-enter-active {
+  transition:
+    opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.page-leave-active {
+  transition: opacity 0.16s ease;
+}
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.page-leave-to {
+  opacity: 0;
+}
+
+/* --- Rispetto assoluto di prefers-reduced-motion ---
+   Disattiva ogni animazione/transizione e annulla gli stati iniziali nascosti. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}

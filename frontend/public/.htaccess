@@ -1,5 +1,10 @@
 RewriteEngine On
 
+# Passa l'header Authorization a PHP (su Apache/CGI altrimenti viene perso → JWT non arriva)
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+
 # Backend PHP: API e media serviti dal front controller in api/public/
 RewriteRule ^api(/.*)?$ api/public/index.php [L,QSA]
 RewriteRule ^uploads/.*$ api/public/index.php [L,QSA]
